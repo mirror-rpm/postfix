@@ -41,8 +41,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.2.2
-Release: 3%{?dist}
+Version: 3.2.3
+Release: 1%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -734,6 +734,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Oct  5 2017 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.3-1
+- New version
+  Resolves: rhbz#1495033
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.2.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
