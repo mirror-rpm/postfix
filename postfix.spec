@@ -42,7 +42,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.2.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -99,7 +99,7 @@ BuildRequires: systemd-units, libicu-devel
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
 %{?with_pcre:BuildRequires: pcre-devel}
-%{?with_mysql:BuildRequires: mysql-devel}
+%{?with_mysql:BuildRequires: mariadb-connector-c-devel}
 %{?with_pgsql:BuildRequires: postgresql-devel}
 %{?with_sqlite:BuildRequires: sqlite-devel}
 %{?with_cdb:BuildRequires: tinycdb-devel}
@@ -247,7 +247,7 @@ CCARGS="${CCARGS} -fsigned-char"
 %endif
 %if %{with mysql}
   CCARGS="${CCARGS} -DHAS_MYSQL -I%{_includedir}/mysql"
-  AUXLIBS_MYSQL="-L%{_libdir}/mysql -lmysqlclient -lm"
+  AUXLIBS_MYSQL="-L%{_libdir}/mariadb -lmysqlclient -lm"
 %endif
 %if %{with pgsql}
   CCARGS="${CCARGS} -DHAS_PGSQL -I%{_includedir}/pgsql"
@@ -734,6 +734,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov  2 2017 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.4-2
+- Used mariadb-connector-c-devel instead of mysql-devel
+  Resolves: rhbz#1493655
+
 * Wed Nov  1 2017 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.4-1
 - New version
   Resolves: rhbz#1508234
