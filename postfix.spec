@@ -42,7 +42,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.2.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -734,6 +734,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 30 2017 Pete Walter <pwalter@fedoraproject.org> - 2:3.2.4-3
+- Rebuild for ICU 60.1
+
 * Thu Nov  2 2017 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.4-2
 - Used mariadb-connector-c-devel instead of mysql-devel
   Resolves: rhbz#1493655
