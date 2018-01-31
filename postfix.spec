@@ -740,6 +740,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Jan 29 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.5-1
 - New version
+  Resolves: rhbz#1539465
 - Switched to libnsl2, because nsl is no longer provided by glibc
 - Macro workaround not to check symbols during compilation, because
   plugins have symbols which are unresolvable during compile time
