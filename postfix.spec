@@ -1,3 +1,6 @@
+# plugins have unresolvable symbols in compile time
+%undefine _strict_symbol_defs_build
+
 %bcond_without mysql
 %bcond_without pgsql
 %bcond_without sqlite
@@ -41,8 +44,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.2.4
-Release: 3%{?dist}
+Version: 3.2.5
+Release: 1%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -94,7 +97,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Determine the different packages required for building postfix
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
-BuildRequires: systemd-units, libicu-devel
+BuildRequires: systemd-units, libicu-devel, libnsl2-devel
 
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
@@ -229,8 +232,9 @@ for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 done
 
 %build
-CCARGS=-fPIC
 unset AUXLIBS AUXLIBS_LDAP AUXLIBS_PCRE AUXLIBS_MYSQL AUXLIBS_PGSQL AUXLIBS_SQLITE AUXLIBS_CDB
+CCARGS="-fPIC -I%{_includedir}/nsl"
+AUXLIBS="-L%{_libdir}/nsl -lnsl"
 
 %ifarch s390 s390x ppc
 CCARGS="${CCARGS} -fsigned-char"
@@ -297,7 +301,7 @@ make -f Makefile.init makefiles shared=yes dynamicmaps=yes \
   OPT="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-comment" \
   POSTFIX_INSTALL_OPTS=-keep-build-mtime
 
-make %{?_smp_mflags} 
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -734,6 +738,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Jan 29 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.5-1
+- New version
+- Switched to libnsl2, because nsl is no longer provided by glibc
+- Macro workaround not to check symbols during compilation, because
+  plugins have symbols which are unresolvable during compile time
+
 * Thu Nov 30 2017 Pete Walter <pwalter@fedoraproject.org> - 2:3.2.4-3
 - Rebuild for ICU 60.1
 
