@@ -93,7 +93,6 @@ Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Determine the different packages required for building postfix
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
