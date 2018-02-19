@@ -45,7 +45,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.2.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -97,6 +97,7 @@ Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 # Determine the different packages required for building postfix
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
+BuildRequires: gcc
 
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
@@ -734,6 +735,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 19 2018 Ondřej Lysoněk <olysonek@redhat.com> - 2:3.2.5-3
+- Add gcc to BuildRequires
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.2.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
