@@ -45,7 +45,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.2.5
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -573,6 +573,7 @@ fi
 %dir %attr(0755, root, root) %{postfix_config_dir}
 %dir %attr(0755, root, root) %{postfix_daemon_dir}
 %dir %attr(0755, root, root) %{postfix_queue_dir}
+%dir %attr(0755, root, root) %{postfix_shlib_dir}
 %dir %attr(0700, %{postfix_user}, root) %{postfix_queue_dir}/active
 %dir %attr(0700, %{postfix_user}, root) %{postfix_queue_dir}/bounce
 %dir %attr(0700, %{postfix_user}, root) %{postfix_queue_dir}/corrupt
@@ -735,6 +736,10 @@ fi
 %endif
 
 %changelog
+* Mon Feb 26 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.5-4
+- Owned /usr/lib64/postfix directory
+  Resolves: rhbz#1548686
+
 * Mon Feb 19 2018 Ondřej Lysoněk <olysonek@redhat.com> - 2:3.2.5-3
 - Add gcc to BuildRequires
 
