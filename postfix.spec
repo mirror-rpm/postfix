@@ -45,7 +45,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.2.5
-Release: 4%{?dist}
+Release: 5%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -736,6 +736,9 @@ fi
 %endif
 
 %changelog
+* Mon Apr 30 2018 Pete Walter <pwalter@fedoraproject.org> - 2:3.2.5-5
+- Rebuild for ICU 61.1
+
 * Mon Feb 26 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.2.5-4
 - Owned /usr/lib64/postfix directory
   Resolves: rhbz#1548686
