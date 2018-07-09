@@ -44,12 +44,12 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.2.5
-Release: 5%{?dist}
+Version: 3.3.1
+Release: 1%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
-License: IBM and GPLv2+
+License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
 Requires(post): systemd systemd-sysv
 Requires(post): %{_sbindir}/alternatives
 Requires(pre): %{_sbindir}/groupadd
@@ -233,8 +233,8 @@ done
 
 %build
 unset AUXLIBS AUXLIBS_LDAP AUXLIBS_PCRE AUXLIBS_MYSQL AUXLIBS_PGSQL AUXLIBS_SQLITE AUXLIBS_CDB
-CCARGS="-fPIC -I%{_includedir}/nsl"
-AUXLIBS="-L%{_libdir}/nsl -lnsl"
+CCARGS="-fPIC"
+AUXLIBS="-lnsl"
 
 %ifarch s390 s390x ppc
 CCARGS="${CCARGS} -fsigned-char"
@@ -736,6 +736,13 @@ fi
 %endif
 
 %changelog
+* Mon Jul  9 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-1
+- New version
+  Resolves: rhbz#1548222
+- Updated libnsl2 library and header paths
+  Resolves: rhbz#1543928
+- Updated license for dual licensing
+
 * Mon Apr 30 2018 Pete Walter <pwalter@fedoraproject.org> - 2:3.2.5-5
 - Rebuild for ICU 61.1
 
