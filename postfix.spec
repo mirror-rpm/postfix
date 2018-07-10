@@ -667,12 +667,10 @@ fi
 
 %if 0%{?fedora} < 23
 %files sysvinit
-%defattr(-, root, root, -)
 %{_initrddir}/postfix
 %endif
 
 %files perl-scripts
-%defattr(-, root, root, -)
 %attr(0755, root, root) %{postfix_command_dir}/qshape
 %attr(0644, root, root) %{_mandir}/man1/qshape*
 %if %{with pflogsumm}
