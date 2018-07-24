@@ -37,6 +37,9 @@
 %define postfix_sample_dir	%{postfix_doc_dir}/samples
 %define postfix_readme_dir	%{postfix_doc_dir}/README_FILES
 
+%global sslcert %{_sysconfdir}/pki/tls/certs/postfix.pem
+%global sslkey  %{_sysconfdir}/pki/tls/private/postfix.key
+
 # Filter private libraries
 %global _privatelibs libpostfix-.+\.so.*
 %global __provides_exclude ^(%{_privatelibs})$
@@ -45,13 +48,14 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.3.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
 Requires(post): systemd systemd-sysv
 Requires(post): %{_sbindir}/alternatives
+Requires(post): %{_bindir}/openssl
 Requires(pre): %{_sbindir}/groupadd
 Requires(pre): %{_sbindir}/useradd
 Requires(preun): %{_sbindir}/alternatives
@@ -478,6 +482,23 @@ if [ -f %{_libdir}/sasl2/smtpd.conf ]; then
 fi
 %endif
 
+# Create self-signed SSL certificate
+if [ ! -f %{sslkey} ]; then
+  umask 077
+  %{_bindir}/openssl genrsa 4096 > %{sslkey} 2> /dev/null
+fi
+
+if [ ! -f %{sslcert} ]; then
+  FQDN=`hostname`
+  if [ "x${FQDN}" = "x" ]; then
+    FQDN=localhost.localdomain
+  fi
+
+  %{_bindir}/openssl req -new -key %{sslkey} -x509 -sha256 -days 365 -set_serial $RANDOM -out %{sslcert} \
+    -subj "/C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=${FQDN}/emailAddress=root@${FQDN}"
+  chmod 644 %{sslcert}
+fi
+
 exit 0
 
 %pre
@@ -734,6 +755,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 24 2018 Robert Scheck <robert@fedoraproject.org> - 2:3.3.1-4
+- Add basic postfix TLS configuration by default (#1608050)
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.3.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
