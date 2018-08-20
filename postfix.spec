@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.3.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -101,7 +101,7 @@ Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 # Determine the different packages required for building postfix
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
-BuildRequires: gcc
+BuildRequires: gcc, m4
 
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
@@ -755,6 +755,10 @@ fi
 %endif
 
 %changelog
+* Mon Aug 20 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-5
+- Added m4 to BuildRequires
+  Resolves: rhbz#1619111
+
 * Tue Jul 24 2018 Robert Scheck <robert@fedoraproject.org> - 2:3.3.1-4
 - Add basic postfix TLS configuration by default (#1608050)
 
