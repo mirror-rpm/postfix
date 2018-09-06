@@ -107,7 +107,7 @@ BuildRequires: gcc, m4
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
 %{?with_pcre:BuildRequires: pcre-devel}
 %{?with_mysql:BuildRequires: mariadb-connector-c-devel}
-%{?with_pgsql:BuildRequires: postgresql-devel}
+%{?with_pgsql:BuildRequires: libpq-devel}
 %{?with_sqlite:BuildRequires: sqlite-devel}
 %{?with_cdb:BuildRequires: tinycdb-devel}
 %{?with_tls:BuildRequires: openssl-devel}
