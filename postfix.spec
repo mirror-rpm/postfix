@@ -756,7 +756,7 @@ fi
 
 %changelog
 * Mon Nov 19 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-6
-- Used _prefix macro for /usr
+- Used _prefix macro for /usr and _includedir macro for /usr/include
 
 * Mon Aug 20 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-5
 - Added m4 to BuildRequires
