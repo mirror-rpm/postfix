@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.3.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -279,7 +279,7 @@ CCARGS="${CCARGS} -fsigned-char"
     CCARGS="${CCARGS} -DUSE_TLS `pkg-config --cflags openssl`"
     AUXLIBS="${AUXLIBS} `pkg-config --libs openssl`"
   else
-    CCARGS="${CCARGS} -DUSE_TLS -I/usr/include/openssl"
+    CCARGS="${CCARGS} -DUSE_TLS -I%{_includedir}/openssl"
     AUXLIBS="${AUXLIBS} -lssl -lcrypto"
   fi
 %endif
@@ -407,8 +407,8 @@ install -c auxiliary/qshape/qshape.pl $RPM_BUILD_ROOT%{postfix_command_dir}/qsha
 rm -f $RPM_BUILD_ROOT%{postfix_config_dir}/aliases
 
 # create /usr/lib/sendmail
-mkdir -p $RPM_BUILD_ROOT/usr/lib
-pushd $RPM_BUILD_ROOT/usr/lib
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib
+pushd $RPM_BUILD_ROOT%{_prefix}/lib
 ln -sf ../sbin/sendmail.postfix .
 popd
 
@@ -417,7 +417,7 @@ touch $RPM_BUILD_ROOT%{_var}/lib/misc/postfix.aliasesdb-stamp
 
 # prepare alternatives ghosts
 for i in %{postfix_command_dir}/sendmail %{_bindir}/{mailq,newaliases,rmail} \
-	%{_sysconfdir}/pam.d/smtp /usr/lib/sendmail \
+	%{_sysconfdir}/pam.d/smtp %{_prefix}/lib/sendmail \
 	%{_mandir}/{man1/{mailq.1,newaliases.1},man5/aliases.5,man8/{sendmail.8,smtpd.8}}
 do
 	touch $RPM_BUILD_ROOT$i
@@ -470,7 +470,7 @@ ALTERNATIVES_DOCS=""
 	--slave %{_bindir}/newaliases mta-newaliases %{_bindir}/newaliases.postfix \
 	--slave %{_sysconfdir}/pam.d/smtp mta-pam %{_sysconfdir}/pam.d/smtp.postfix \
 	--slave %{_bindir}/rmail mta-rmail %{_bindir}/rmail.postfix \
-	--slave /usr/lib/sendmail mta-sendmail /usr/lib/sendmail.postfix \
+	--slave %{_prefix}/lib/sendmail mta-sendmail %{_prefix}/lib/sendmail.postfix \
 	$ALTERNATIVES_DOCS \
 	--initscript postfix
 
@@ -668,7 +668,7 @@ fi
 %{_bindir}/newaliases.postfix
 %attr(0755, root, root) %{_bindir}/rmail.postfix
 %attr(0755, root, root) %{_sbindir}/sendmail.postfix
-/usr/lib/sendmail.postfix
+%{_prefix}/lib/sendmail.postfix
 
 %ghost %{_sysconfdir}/pam.d/smtp
 
@@ -682,7 +682,7 @@ fi
 %ghost %attr(0755, root, root) %{_bindir}/newaliases
 %ghost %attr(0755, root, root) %{_bindir}/rmail
 %ghost %attr(0755, root, root) %{_sbindir}/sendmail
-%ghost %attr(0755, root, root) /usr/lib/sendmail
+%ghost %attr(0755, root, root) %{_prefix}/lib/sendmail
 
 %ghost %attr(0644, root, root) %{_var}/lib/misc/postfix.aliasesdb-stamp
 
@@ -755,6 +755,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 19 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-6
+- Used _prefix macro for /usr
+
 * Mon Aug 20 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-5
 - Added m4 to BuildRequires
   Resolves: rhbz#1619111
