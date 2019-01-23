@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.3.1
-Release: 7%{?dist}
+Release: 8%{?dist}
 Epoch: 2
 Group: System Environment/Daemons
 URL: http://www.postfix.org
@@ -758,6 +758,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 23 2019 Pete Walter <pwalter@fedoraproject.org> - 2:3.3.1-8
+- Rebuild for ICU 63
+
 * Mon Dec  3 2018 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.1-7
 - Fixed posttls-finger to work with unix domains
 
