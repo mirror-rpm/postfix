@@ -50,7 +50,6 @@ Summary: Postfix Mail Transport Agent
 Version: 3.3.1
 Release: 8%{?dist}
 Epoch: 2
-Group: System Environment/Daemons
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
 Requires(post): systemd systemd-sysv
@@ -120,7 +119,6 @@ Postfix is a Mail Transport Agent (MTA).
 %if 0%{?fedora} < 23
 %package sysvinit
 Summary: SysV initscript for postfix
-Group: System Environment/Daemons
 BuildArch: noarch
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires(preun): chkconfig
@@ -132,7 +130,6 @@ This package contains the SysV initscript.
 
 %package perl-scripts
 Summary: Postfix utilities written in perl
-Group: Applications/System
 Requires: %{name} = %{epoch}:%{version}-%{release}
 # perl-scripts introduced in 2:2.5.5-2
 Obsoletes: postfix < 2:2.5.5-2
