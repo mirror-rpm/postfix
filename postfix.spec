@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.3.1
-Release: 8%{?dist}
+Release: 9%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -755,6 +755,9 @@ fi
 %endif
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.3.1-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Wed Jan 23 2019 Pete Walter <pwalter@fedoraproject.org> - 2:3.3.1-8
 - Rebuild for ICU 63
 
