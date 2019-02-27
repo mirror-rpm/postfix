@@ -47,8 +47,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.3.1
-Release: 9%{?dist}
+Version: 3.3.3
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -85,12 +85,10 @@ Source101: postfix-pam.conf
 
 # Patches
 
-Patch1: postfix-3.2.0-config.patch
+Patch1: postfix-3.3.3-config.patch
 Patch2: postfix-3.1.0-files.patch
-Patch3: postfix-3.1.0-alternatives.patch
+Patch3: postfix-3.3.3-alternatives.patch
 Patch4: postfix-3.2.0-large-fs.patch
-# Found by coverity static analysis, it will be addressed upstream
-Patch5: postfix-3.3.1-posttls-finger-unix-fix.patch
 Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
@@ -215,7 +213,6 @@ maps with Postfix, you need this.
 %patch2 -p1 -b .files
 %patch3 -p1 -b .alternatives
 %patch4 -p1 -b .large-fs
-%patch5 -p1 -b .posttls-finger-unix-fix
 
 # Change DEF_SHLIB_DIR according to build host
 sed -i \
@@ -755,6 +752,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 27 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.3-1
+- New version
+  Resolves: rhbz#1683487
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.3.1-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
