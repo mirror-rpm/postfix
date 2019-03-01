@@ -47,7 +47,7 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.3.3
+Version: 3.4.0
 Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
@@ -85,10 +85,10 @@ Source101: postfix-pam.conf
 
 # Patches
 
-Patch1: postfix-3.3.3-config.patch
-Patch2: postfix-3.1.0-files.patch
+Patch1: postfix-3.4.0-config.patch
+Patch2: postfix-3.4.0-files.patch
 Patch3: postfix-3.3.3-alternatives.patch
-Patch4: postfix-3.2.0-large-fs.patch
+Patch4: postfix-3.4.0-large-fs.patch
 Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
@@ -659,6 +659,7 @@ fi
 %attr(0755, root, root) %{postfix_daemon_dir}/postfix-wrapper
 %attr(0755, root, root) %{postfix_daemon_dir}/postmulti-script
 %attr(0755, root, root) %{postfix_daemon_dir}/postscreen
+%attr(0755, root, root) %{postfix_daemon_dir}/postlogd
 %attr(0755, root, root) %{postfix_daemon_dir}/proxymap
 %attr(0755, root, root) %{postfix_shlib_dir}/libpostfix-*.so
 %{_bindir}/mailq.postfix
@@ -752,6 +753,10 @@ fi
 %endif
 
 %changelog
+* Fri Mar  1 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.0-1
+- New version
+  Resolves: rhbz#1683855
+
 * Wed Feb 27 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.3.3-1
 - New version
   Resolves: rhbz#1683487
