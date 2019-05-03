@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.4.4
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -93,6 +93,7 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
+Patch12: postfix-3.4.4-res-insecure-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -228,6 +229,7 @@ pushd pflogsumm-%{pflogsumm_ver}
 popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
+%patch12 -p1 -b .res-insecure-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -755,6 +757,9 @@ fi
 %endif
 
 %changelog
+* Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-4
+- Fixed FTBFS with new glibc due to dropped RES_INSECURE1/2 macros
+
 * Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-3
 - Added findutils as explicit requirement
   Resolves: rhbz#1629057
