@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.4.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -61,7 +61,7 @@ Requires(preun): %{_sbindir}/alternatives
 Requires(preun): systemd
 Requires(postun): systemd
 # Required by /usr/libexec/postfix/postfix-script
-Requires: diffutils
+Requires: diffutils, findutils
 Provides: MTA smtpd smtpdaemon server(smtp)
 
 Source0: ftp://ftp.porcupine.org/mirrors/postfix-release/official/%{name}-%{version}.tar.gz
@@ -101,7 +101,7 @@ Patch11: postfix-3.4.4-chroot-example-fix.patch
 # Determine the different packages required for building postfix
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
-BuildRequires: gcc, m4
+BuildRequires: gcc, m4, findutils
 
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_sasl:BuildRequires: cyrus-sasl-devel}
@@ -755,6 +755,10 @@ fi
 %endif
 
 %changelog
+* Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-3
+- Added findutils as explicit requirement
+  Resolves: rhbz#1629057
+
 * Tue Mar 26 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-2
 - Fixed example chroot-update script
   Resolves: rhbz#1398910
