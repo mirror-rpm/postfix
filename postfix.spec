@@ -93,7 +93,7 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
-Patch12: postfix-3.4.4-res-insecure-fix.patch
+Patch12: postfix-3.4.4-res-macros-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -229,7 +229,7 @@ pushd pflogsumm-%{pflogsumm_ver}
 popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
-%patch12 -p1 -b .res-insecure-fix
+%patch12 -p1 -b .res-macros-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -758,7 +758,7 @@ fi
 
 %changelog
 * Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-4
-- Fixed FTBFS with new glibc due to dropped RES_INSECURE1/2 macros
+- Fixed FTBFS with new glibc due to dropped RES macros
 
 * Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-3
 - Added findutils as explicit requirement

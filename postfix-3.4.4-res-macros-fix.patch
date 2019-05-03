@@ -1,8 +1,8 @@
 diff --git a/src/dns/dns_str_resflags.c b/src/dns/dns_str_resflags.c
-index 5f2cce5..8b50a39 100644
+index 5f2cce5..df32345 100644
 --- a/src/dns/dns_str_resflags.c
 +++ b/src/dns/dns_str_resflags.c
-@@ -60,8 +60,12 @@ static const LONG_NAME_MASK resflag_table[] = {
+@@ -60,10 +60,16 @@ static const LONG_NAME_MASK resflag_table[] = {
      "RES_DEFNAMES", RES_DEFNAMES,
      "RES_STAYOPEN", RES_STAYOPEN,
      "RES_DNSRCH", RES_DNSRCH,
@@ -13,5 +13,9 @@ index 5f2cce5..8b50a39 100644
      "RES_INSECURE2", RES_INSECURE2,
 +#endif
      "RES_NOALIASES", RES_NOALIASES,
++#ifdef RES_USE_INET6
      "RES_USE_INET6", RES_USE_INET6,
++#endif
  #ifdef RES_ROTATE
+     "RES_ROTATE", RES_ROTATE,
+ #endif
