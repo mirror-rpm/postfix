@@ -47,8 +47,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.4.4
-Release: 4%{?dist}
+Version: 3.4.6
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -757,6 +757,10 @@ fi
 %endif
 
 %changelog
+* Mon Jul  8 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.6-1
+- New version
+  Resolves: rhbz#1726462
+
 * Fri May  3 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.4-4
 - Fixed FTBFS with new glibc due to dropped RES macros
 
