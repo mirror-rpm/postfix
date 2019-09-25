@@ -48,11 +48,11 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.4.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
-Requires(post): systemd systemd-sysv
+Requires(post): systemd systemd-sysv hostname
 Requires(post): %{_sbindir}/alternatives
 Requires(post): %{_bindir}/openssl
 Requires(pre): %{_sbindir}/groupadd
@@ -757,6 +757,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 25 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.7-2
+- Added hostname as explicit requirement for the post scriptlet
+
 * Mon Sep 23 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.7-1
 - New version
   Resolves: rhbz#1754198
