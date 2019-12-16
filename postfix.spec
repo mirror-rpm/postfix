@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.4.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -94,6 +94,8 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
 Patch12: postfix-3.4.4-res-macros-fix.patch
+# rhbz#1723950, included upstream
+Patch13: postfix-3.4.8-ref-search-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -230,6 +232,7 @@ popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
 %patch12 -p1 -b .res-macros-fix
+%patch13 -p1 -b .ref-search-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -757,6 +760,10 @@ fi
 %endif
 
 %changelog
+* Mon Dec 16 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.8-2
+- Fixed DNS resolver to use ref_search instead of ref_query
+  Resolves: rhbz#1723950
+
 * Mon Nov 25 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.8-1
 - New version
   Resolves: rhbz#1776033
