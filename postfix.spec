@@ -48,7 +48,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.4.8
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -760,6 +760,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.4.8-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Mon Dec 16 2019 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.8-2
 - Fixed DNS resolver to use ref_search instead of ref_query
   Resolves: rhbz#1723950
