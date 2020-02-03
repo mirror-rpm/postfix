@@ -47,8 +47,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.4.8
-Release: 3%{?dist}
+Version: 3.4.9
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -94,8 +94,6 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
 Patch12: postfix-3.4.4-res-macros-fix.patch
-# rhbz#1723950, included upstream
-Patch13: postfix-3.4.8-ref-search-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -232,7 +230,6 @@ popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
 %patch12 -p1 -b .res-macros-fix
-%patch13 -p1 -b .ref-search-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -241,7 +238,7 @@ done
 
 %build
 unset AUXLIBS AUXLIBS_LDAP AUXLIBS_PCRE AUXLIBS_MYSQL AUXLIBS_PGSQL AUXLIBS_SQLITE AUXLIBS_CDB
-CCARGS="-fPIC"
+CCARGS="-fPIC -fcommon"
 AUXLIBS="-lnsl"
 
 %ifarch s390 s390x ppc
@@ -760,6 +757,12 @@ fi
 %endif
 
 %changelog
+* Mon Feb  3 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.4.9-1
+- New version
+  Resolves: rhbz#1797383
+- Dropped ref-search patch (upstreamed)
+- Built with -fcommon to overcome FTBFS with gcc-10, problem reported upstream
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.4.8-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
