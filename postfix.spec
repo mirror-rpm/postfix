@@ -47,7 +47,7 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.5.0
+Version: 3.5.1
 Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
@@ -755,6 +755,10 @@ fi
 %endif
 
 %changelog
+* Mon Apr 20 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.1-1
+- New version
+  Resolves: rhbz#1825547
+
 * Mon Mar 16 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.0-1
 - New version
   Resolves: rhbz#1813740
