@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -321,7 +321,7 @@ make -f Makefile.init makefiles shared=yes dynamicmaps=yes \
   OPT="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-comment" \
   POSTFIX_INSTALL_OPTS=-keep-build-mtime
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -783,6 +783,10 @@ fi
 %endif
 
 %changelog
+* Tue Jul 14 2020 Tom Stellard <tstellar@redhat.com> - 2:3.5.4-3
+- Use make macros
+- https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
+
 * Wed Jul  8 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.4-2
 - Added support for LMDB maps
 
