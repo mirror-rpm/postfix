@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -324,9 +324,6 @@ make -f Makefile.init makefiles shared=yes dynamicmaps=yes \
 %make_build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT
-
 # install postfix into $RPM_BUILD_ROOT
 
 # Move stuff around so we don't conflict with sendmail
@@ -354,12 +351,6 @@ make non-interactive-package \
        sample_directory=%{postfix_sample_dir} \
        readme_directory=%{postfix_readme_dir} || exit 1
 
-%if 0%{?fedora} < 23
-# This installs into the /etc/rc.d/init.d directory
-mkdir -p $RPM_BUILD_ROOT%{_initrddir}
-install -c %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/postfix
-%endif
-
 # Systemd
 mkdir -p %{buildroot}%{_unitdir}
 install -m 644 %{SOURCE2} %{buildroot}%{_unitdir}
@@ -372,8 +363,8 @@ for i in active bounce corrupt defer deferred flush incoming private saved maild
     mkdir -p $RPM_BUILD_ROOT%{postfix_queue_dir}/$i
 done
 
-# install performance benchmark tools by hand
-for i in smtp-sink smtp-source ; do
+# install performance benchmark and test tools by hand
+for i in smtp-sink smtp-source posttls-finger ; do
   install -c -m 755 bin/$i $RPM_BUILD_ROOT%{postfix_command_dir}/
   install -c -m 755 man/man1/$i.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 done
@@ -644,6 +635,7 @@ fi
 
 %attr(0755, root, root) %{postfix_command_dir}/smtp-sink
 %attr(0755, root, root) %{postfix_command_dir}/smtp-source
+%attr(0755, root, root) %{postfix_command_dir}/posttls-finger
 
 %attr(0755, root, root) %{postfix_command_dir}/postalias
 %attr(0755, root, root) %{postfix_command_dir}/postcat
@@ -783,6 +775,11 @@ fi
 %endif
 
 %changelog
+* Thu Aug  6 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.6-2
+- Minor spec cleanup
+- Added posttls-finger test tool
+  Resolves: rhbz#1865701
+
 * Tue Jul 28 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.6-1
 - New version
   Resolves: rhbz#1860547
