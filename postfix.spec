@@ -48,8 +48,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.5.6
-Release: 2%{?dist}
+Version: 3.5.7
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -775,6 +775,10 @@ fi
 %endif
 
 %changelog
+* Mon Aug 31 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.7-1
+- New version
+  Resolves: rhbz#1873857
+
 * Thu Aug  6 2020 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.6-2
 - Minor spec cleanup
 - Added posttls-finger test tool
