@@ -100,6 +100,7 @@ Patch11: postfix-3.4.4-chroot-example-fix.patch
 
 
 # Determine the different packages required for building postfix
+BuildRequires: make
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
 BuildRequires: gcc, m4, findutils
