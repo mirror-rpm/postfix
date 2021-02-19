@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.9
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -118,7 +118,7 @@ BuildRequires: gcc, m4, findutils
 %description
 Postfix is a Mail Transport Agent (MTA).
 
-%if 0%{?fedora} < 23
+%if 0%{?fedora} < 23 && 0%{?rhel} < 9
 %package sysvinit
 Summary: SysV initscript for postfix
 BuildArch: noarch
@@ -535,7 +535,7 @@ exit 0
 %postun
 %systemd_postun_with_restart %{name}.service
 
-%if 0%{?fedora} < 23
+%if 0%{?fedora} < 23 && 0%{?rhel} < 9
 %post sysvinit
 /sbin/chkconfig --add postfix >/dev/null 2>&1 ||:
 
@@ -698,7 +698,7 @@ fi
 
 %ghost %attr(0644, root, root) %{_var}/lib/misc/postfix.aliasesdb-stamp
 
-%if 0%{?fedora} < 23
+%if 0%{?fedora} < 23 && 0%{?rhel} < 9
 %files sysvinit
 %{_initrddir}/postfix
 %endif
@@ -776,6 +776,10 @@ fi
 %endif
 
 %changelog
+* Fri Feb 19 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.9-4
+- Fixed sysvinit conditionals for RHEL
+  Resolves: rhbz#1930709
+
 * Mon Feb 08 2021 Pavel Raiskup <praiskup@redhat.com> - 2:3.5.9-3
 - rebuild for libpq ABI fix rhbz#1908268
 
