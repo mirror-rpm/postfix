@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.9
-Release: 4%{?dist}
+Release: 5%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -776,6 +776,10 @@ fi
 %endif
 
 %changelog
+* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 2:3.5.9-5
+- Rebuilt for updated systemd-rpm-macros
+  See https://pagure.io/fesco/issue/2583.
+
 * Fri Feb 19 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.9-4
 - Fixed sysvinit conditionals for RHEL
   Resolves: rhbz#1930709
