@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.9
-Release: 5%{?dist}
+Release: 6%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -104,6 +104,10 @@ BuildRequires: make
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
 BuildRequires: gcc, m4, findutils
+%if 0%{?rhel} >= 9
+%else
+BuildRequires: libnsl2-devel
+%endif
 
 %{?with_ldap:BuildRequires: openldap-devel}
 %{?with_lmdb:BuildRequires: lmdb-devel}
@@ -250,7 +254,11 @@ done
 %build
 unset AUXLIBS AUXLIBS_LDAP AUXLIBS_LMDB AUXLIBS_PCRE AUXLIBS_MYSQL AUXLIBS_PGSQL AUXLIBS_SQLITE AUXLIBS_CDB
 CCARGS="-fPIC -fcommon"
+%if 0%{?rhel} >= 9
+AUXLIBS=""
+%else
 AUXLIBS="-lnsl"
+%endif
 
 %ifarch s390 s390x ppc
 CCARGS="${CCARGS} -fsigned-char"
@@ -305,7 +313,9 @@ CCARGS="${CCARGS} -fsigned-char"
 
 CCARGS="${CCARGS} -DDEF_CONFIG_DIR=\\\"%{postfix_config_dir}\\\""
 CCARGS="${CCARGS} $(getconf LFS_CFLAGS)"
-
+%if 0%{?rhel} >= 9
+    CCARGS="${CCARGS} -DNO_NIS"
+%endif
 LDFLAGS="%{?__global_ldflags} %{?_hardened_build:-Wl,-z,relro,-z,now}"
 
 # SHLIB_RPATH is needed to find private libraries
@@ -776,6 +786,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 24 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.9-6
+- Disable NIS support for RHEL9+ (patch from fjanus@redhat.com)
+
 * Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 2:3.5.9-5
 - Rebuilt for updated systemd-rpm-macros
   See https://pagure.io/fesco/issue/2583.
