@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.9
-Release: 6%{?dist}
+Release: 7%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -104,8 +104,7 @@ BuildRequires: make
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
 BuildRequires: systemd-units, libicu-devel, libnsl2-devel
 BuildRequires: gcc, m4, findutils
-%if 0%{?rhel} >= 9
-%else
+%if 0%{?rhel} < 9
 BuildRequires: libnsl2-devel
 %endif
 
@@ -786,6 +785,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 25 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.9-7
+- Simplified macros related to NIS
+
 * Wed Mar 24 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.9-6
 - Disable NIS support for RHEL9+ (patch from fjanus@redhat.com)
 
