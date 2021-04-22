@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.5.10
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -102,7 +102,7 @@ Patch11: postfix-3.4.4-chroot-example-fix.patch
 # Determine the different packages required for building postfix
 BuildRequires: make
 BuildRequires: libdb-devel, perl-generators, pkgconfig, zlib-devel
-BuildRequires: systemd-units, libicu-devel, libnsl2-devel
+BuildRequires: systemd-units, libicu-devel
 BuildRequires: gcc, m4, findutils
 %if 0%{?rhel} < 9
 BuildRequires: libnsl2-devel
@@ -785,6 +785,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 22 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.10-2
+- Fixed NIS build requirements
+
 * Mon Apr 12 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.10-1
 - New version
   Resolves: rhbz#1948306
