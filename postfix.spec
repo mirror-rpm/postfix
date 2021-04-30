@@ -48,8 +48,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.5.10
-Release: 2%{?dist}
+Version: 3.6.0
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -785,6 +785,10 @@ fi
 %endif
 
 %changelog
+* Fri Apr 30 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.0-1
+- New version
+  Resolves: rhbz#1955369
+
 * Thu Apr 22 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.5.10-2
 - Fixed NIS build requirements
 

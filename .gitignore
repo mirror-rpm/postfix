@@ -1,2 +1,2 @@
-pflogsumm-*.tar.gz
-postfix-*.tar.gz
+/pflogsumm-*.tar.gz
+/postfix-*.tar.gz
