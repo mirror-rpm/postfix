@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -360,6 +360,12 @@ make non-interactive-package \
        manpage_directory=%{_mandir} \
        sample_directory=%{postfix_sample_dir} \
        readme_directory=%{postfix_readme_dir} || exit 1
+
+%if 0%{?fedora} < 23 && 0%{?rhel} < 9
+# This installs into the /etc/rc.d/init.d directory
+mkdir -p $RPM_BUILD_ROOT%{_initrddir}
+install -c %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/postfix
+%endif
 
 # Systemd
 mkdir -p %{buildroot}%{_unitdir}
@@ -785,6 +791,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul  2 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.1-2
+- Fixed build on rhel < 9
+
 * Mon Jun 14 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.1-1
 - New version
   Resolves: rhbz#1971363
