@@ -48,8 +48,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.6.1
-Release: 3%{?dist}
+Version: 3.6.2
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -94,6 +94,9 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
+# bug report sent upstream, the fedora patch is a hack,
+# please do not reuse ;)
+Patch12: postfix-3.6.2-glibc-234-build-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -244,6 +247,7 @@ pushd pflogsumm-%{pflogsumm_ver}
 popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
+%patch12 -p1 -b .glibc-234-build-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -791,6 +795,10 @@ fi
 %endif
 
 %changelog
+* Thu Jul 29 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-1
+- New version
+  Resolves: rhbz#1985778
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2:3.6.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
