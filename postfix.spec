@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -512,7 +512,7 @@ fi
 # Create self-signed SSL certificate
 if [ ! -f %{sslkey} ]; then
   umask 077
-  %{_bindir}/openssl genrsa 4096 > %{sslkey} 2> /dev/null
+  %{_bindir}/openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out %{sslkey}
 fi
 
 if [ ! -f %{sslcert} ]; then
@@ -521,8 +521,10 @@ if [ ! -f %{sslcert} ]; then
     FQDN=localhost.localdomain
   fi
 
-  %{_bindir}/openssl req -new -key %{sslkey} -x509 -sha256 -days 365 -set_serial $RANDOM -out %{sslcert} \
-    -subj "/C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=${FQDN}/emailAddress=root@${FQDN}"
+  req_cmd="%{_bindir}/openssl req -new -key %{sslkey} -x509 -sha256 -days 365 -set_serial $RANDOM -out %{sslcert} \
+    -subj /C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=${FQDN}/emailAddress=root@${FQDN}"
+# openssl-3.0 and fallback for backward compatibility with openssl < 3.0
+  $req_cmd -noenc -copy_extension none 2>/dev/null || $req_cmd
   chmod 644 %{sslcert}
 fi
 
@@ -795,6 +797,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug  2 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-2
+- Fixed scriptlets to work with openssl-3.0
+
 * Thu Jul 29 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-1
 - New version
   Resolves: rhbz#1985778
