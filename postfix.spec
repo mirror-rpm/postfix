@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -524,7 +524,7 @@ if [ ! -f %{sslcert} ]; then
   req_cmd="%{_bindir}/openssl req -new -key %{sslkey} -x509 -sha256 -days 365 -set_serial $RANDOM -out %{sslcert} \
     -subj /C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=${FQDN}/emailAddress=root@${FQDN}"
 # openssl-3.0 and fallback for backward compatibility with openssl < 3.0
-  $req_cmd -noenc -copy_extension none 2>/dev/null || $req_cmd
+  $req_cmd -noenc -copy_extensions none 2>/dev/null || $req_cmd
   chmod 644 %{sslcert}
 fi
 
@@ -797,6 +797,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug  3 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-3
+- Fixed openssl req parameters
+
 * Mon Aug  2 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-2
 - Fixed scriptlets to work with openssl-3.0
 
