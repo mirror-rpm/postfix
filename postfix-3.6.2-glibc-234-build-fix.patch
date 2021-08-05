@@ -2,14 +2,6 @@ diff --git a/src/util/sys_defs.h b/src/util/sys_defs.h
 index 99bec9b..95c78ec 100644
 --- a/src/util/sys_defs.h
 +++ b/src/util/sys_defs.h
-@@ -1,6 +1,7 @@
- #ifndef _SYS_DEFS_H_INCLUDED_
- #define _SYS_DEFS_H_INCLUDED_
- 
-+
- /*++
- /* NAME
- /*	sys_defs 3h
 @@ -802,6 +803,9 @@ extern int initgroups(const char *, int);
  #define _PATH_PROCNET_IFINET6 "/proc/net/if_inet6"
  #endif

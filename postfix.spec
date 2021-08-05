@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.2
-Release: 4%{?dist}
+Release: 5%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -96,6 +96,8 @@ Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
 # upstream patch
 Patch12: postfix-3.6.2-glibc-234-build-fix.patch
+# sent upstream
+Patch13: postfix-3.6.2-whitespace-name-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -247,6 +249,7 @@ popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
 %patch12 -p1 -b .glibc-234-build-fix
+%patch13 -p1 -b .whitespace-name-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -796,6 +799,10 @@ fi
 %endif
 
 %changelog
+* Thu Aug  5 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-5
+- Fixed cleanup crash when processing messages with whitespace only fullname
+- Fixed whitespaces in the glibc-234-build-fix patch
+
 * Thu Aug  5 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-4
 - Updated patch fixing FTBFS with the glibc-2.34
 
