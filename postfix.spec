@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -94,8 +94,7 @@ Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
-# bug report sent upstream, the fedora patch is a hack,
-# please do not reuse ;)
+# upstream patch
 Patch12: postfix-3.6.2-glibc-234-build-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
@@ -797,6 +796,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug  5 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-4
+- Updated patch fixing FTBFS with the glibc-2.34
+
 * Tue Aug  3 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-3
 - Fixed openssl req parameters
 

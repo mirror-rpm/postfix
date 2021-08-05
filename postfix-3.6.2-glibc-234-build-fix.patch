@@ -1,43 +1,22 @@
-diff --git a/src/util/sys_compat.c b/src/util/sys_compat.c
-index 8bf8e58..c87f043 100644
---- a/src/util/sys_compat.c
-+++ b/src/util/sys_compat.c
-@@ -286,7 +286,7 @@ int     dup2_pass_on_exec(int oldd, int newd)
- 
- /* closefrom() - closes all file descriptors from the given one up */
- 
--int     closefrom(int lowfd)
-+void     closefrom(int lowfd)
- {
-     int     fd_limit = open_limit(0);
-     int     fd;
-@@ -298,14 +298,14 @@ int     closefrom(int lowfd)
-      */
-     if (lowfd < 0) {
- 	errno = EBADF;
--	return (-1);
-+	return;
-     }
-     if (fd_limit > 500)
- 	fd_limit = 500;
-     for (fd = lowfd; fd < fd_limit; fd++)
- 	(void) close(fd);
- 
--    return (0);
-+    return;
- }
- 
- #endif
 diff --git a/src/util/sys_defs.h b/src/util/sys_defs.h
-index 99bec9b..16e27db 100644
+index 99bec9b..95c78ec 100644
 --- a/src/util/sys_defs.h
 +++ b/src/util/sys_defs.h
-@@ -1509,7 +1509,7 @@ extern int setsid(void);
+@@ -1,6 +1,7 @@
+ #ifndef _SYS_DEFS_H_INCLUDED_
+ #define _SYS_DEFS_H_INCLUDED_
+ 
++
+ /*++
+ /* NAME
+ /*	sys_defs 3h
+@@ -802,6 +803,9 @@ extern int initgroups(const char *, int);
+ #define _PATH_PROCNET_IFINET6 "/proc/net/if_inet6"
  #endif
- 
- #ifndef HAS_CLOSEFROM
--extern int closefrom(int);
-+extern void closefrom(int);
- 
  #endif
- 
++#if HAVE_GLIBC_API_VERSION_SUPPORT(2, 34)
++#define HAS_CLOSEFROM
++#endif
+ #include <linux/version.h>
+ #if !defined(KERNEL_VERSION)
+ #define KERNEL_VERSION(a,b,c) (LINUX_VERSION_CODE + 1)
