@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.2
-Release: 5%{?dist}
+Release: 6%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -799,6 +799,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 2:3.6.2-6
+- Rebuilt with OpenSSL 3.0.0
+
 * Thu Aug  5 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.2-5
 - Fixed cleanup crash when processing messages with whitespace only fullname
 - Fixed whitespaces in the glibc-234-build-fix patch
