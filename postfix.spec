@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -799,6 +799,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 12 2021 Björn Esser <besser82@fedoraproject.org> - 2:3.6.3-2
+- Rebuild(libnsl2)
+
 * Wed Nov 10 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.3-1
 - New version
   Resolves: rhbz#2020984
