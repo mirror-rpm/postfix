@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -257,6 +257,7 @@ for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 done
 
 %build
+%set_build_flags
 unset AUXLIBS AUXLIBS_LDAP AUXLIBS_LMDB AUXLIBS_PCRE AUXLIBS_MYSQL AUXLIBS_PGSQL AUXLIBS_SQLITE AUXLIBS_CDB
 CCARGS="-fPIC -fcommon"
 %if 0%{?rhel} >= 9
@@ -321,7 +322,7 @@ CCARGS="${CCARGS} $(getconf LFS_CFLAGS)"
 %if 0%{?rhel} >= 9
     CCARGS="${CCARGS} -DNO_NIS"
 %endif
-LDFLAGS="%{?__global_ldflags} %{?_hardened_build:-Wl,-z,relro,-z,now}"
+LDFLAGS="$LDFLAGS %{?_hardened_build:-Wl,-z,relro,-z,now}"
 
 # SHLIB_RPATH is needed to find private libraries
 # LDFLAGS are added to SHLIB_RPATH because the postfix build system
@@ -334,7 +335,7 @@ make -f Makefile.init makefiles shared=yes dynamicmaps=yes \
   AUXLIBS_PGSQL="${AUXLIBS_PGSQL}" AUXLIBS_SQLITE="${AUXLIBS_SQLITE}" \
   AUXLIBS_CDB="${AUXLIBS_CDB}" \
   DEBUG="" SHLIB_RPATH="-Wl,-rpath,%{postfix_shlib_dir} $LDFLAGS" \
-  OPT="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-comment" \
+  OPT="$CFLAGS -fno-strict-aliasing -Wno-comment" \
   POSTFIX_INSTALL_OPTS=-keep-build-mtime
 
 %make_build
@@ -799,6 +800,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 08 2021 Timm Bäder <tbaeder@redhat.com> - 2:3.6.3-3
+- Use %%set_build_flags to set all build flags
+
 * Fri Nov 12 2021 Björn Esser <besser82@fedoraproject.org> - 2:3.6.3-2
 - Rebuild(libnsl2)
 
