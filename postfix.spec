@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -62,7 +62,10 @@ Requires(preun): %{_sbindir}/alternatives
 Requires(preun): systemd
 Requires(postun): systemd
 # Required by /usr/libexec/postfix/postfix-script
-Requires: diffutils, findutils
+Requires: diffutils
+Requires: findutils
+# for restorecon
+Requires: policycoreutils
 Provides: MTA smtpd smtpdaemon server(smtp)
 
 Source0: ftp://ftp.porcupine.org/mirrors/postfix-release/official/%{name}-%{version}.tar.gz
@@ -800,6 +803,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 14 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.3-4
+- Added SELinux workound for systemd service to work after 'postfix start'
+
 * Wed Dec 08 2021 Timm Bäder <tbaeder@redhat.com> - 2:3.6.3-3
 - Use %%set_build_flags to set all build flags
 
