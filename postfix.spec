@@ -49,7 +49,7 @@
 Name: postfix
 Summary: Postfix Mail Transport Agent
 Version: 3.6.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -101,6 +101,8 @@ Patch11: postfix-3.4.4-chroot-example-fix.patch
 Patch12: postfix-3.6.2-glibc-234-build-fix.patch
 # sent upstream
 Patch13: postfix-3.6.2-whitespace-name-fix.patch
+# rhbz#1931403, sent upstream
+Patch14: pflogsumm-1.1.5-syslog-name-underscore-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -253,6 +255,7 @@ popd
 %patch11 -p1 -b .chroot-example-fix
 %patch12 -p1 -b .glibc-234-build-fix
 %patch13 -p1 -b .whitespace-name-fix
+%patch14 -p1 -b .pflogsumm-1.1.5-syslog-name-underscore-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -803,6 +806,10 @@ fi
 %endif
 
 %changelog
+* Mon Jan 17 2022 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.3-5
+- Fixed pflogsumm to allow underscores in the syslog_name
+  Resolves: rhbz#1931403
+
 * Tue Dec 14 2021 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.3-4
 - Added SELinux workound for systemd service to work after 'postfix start'
 
