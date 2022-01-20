@@ -48,8 +48,8 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.6.3
-Release: 5%{?dist}
+Version: 3.6.4
+Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
 License: (IBM and GPLv2+) or (EPL-2.0 and GPLv2+)
@@ -521,7 +521,7 @@ fi
 # Create self-signed SSL certificate
 if [ ! -f %{sslkey} ]; then
   umask 077
-  %{_bindir}/openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out %{sslkey}
+  %{_bindir}/openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out %{sslkey} 2>/dev/null || echo "openssl genpkey failed"
 fi
 
 if [ ! -f %{sslcert} ]; then
@@ -533,7 +533,7 @@ if [ ! -f %{sslcert} ]; then
   req_cmd="%{_bindir}/openssl req -new -key %{sslkey} -x509 -sha256 -days 365 -set_serial $RANDOM -out %{sslcert} \
     -subj /C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=${FQDN}/emailAddress=root@${FQDN}"
 # openssl-3.0 and fallback for backward compatibility with openssl < 3.0
-  $req_cmd -noenc -copy_extensions none 2>/dev/null || $req_cmd
+  $req_cmd -noenc -copy_extensions none 2>/dev/null || $req_cmd 2>/dev/null || echo "openssl req failed"
   chmod 644 %{sslcert}
 fi
 
@@ -806,6 +806,12 @@ fi
 %endif
 
 %changelog
+* Thu Jan 20 2022 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.4-1
+- New version
+  Resolves: rhbz#2040977
+- Suppressed openssl output during SSL certificates generation
+  Resolves: rhbz#2041589
+
 * Mon Jan 17 2022 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.3-5
 - Fixed pflogsumm to allow underscores in the syslog_name
   Resolves: rhbz#1931403
