@@ -48,7 +48,7 @@
 
 Name: postfix
 Summary: Postfix Mail Transport Agent
-Version: 3.6.4
+Version: 3.7.0
 Release: 1%{?dist}
 Epoch: 2
 URL: http://www.postfix.org
@@ -89,20 +89,18 @@ Source101: postfix-pam.conf
 
 # Patches
 
-Patch1: postfix-3.5.0-config.patch
+Patch1: postfix-3.7.0-config.patch
 Patch2: postfix-3.4.0-files.patch
 Patch3: postfix-3.3.3-alternatives.patch
-Patch4: postfix-3.4.0-large-fs.patch
+Patch4: postfix-3.7.0-large-fs.patch
 Patch9: pflogsumm-1.1.5-datecalc.patch
 # rhbz#1384871, sent upstream
 Patch10: pflogsumm-1.1.5-ipv6-warnings-fix.patch
 Patch11: postfix-3.4.4-chroot-example-fix.patch
-# upstream patch
-Patch12: postfix-3.6.2-glibc-234-build-fix.patch
 # sent upstream
-Patch13: postfix-3.6.2-whitespace-name-fix.patch
+Patch12: postfix-3.7.0-whitespace-name-fix.patch
 # rhbz#1931403, sent upstream
-Patch14: pflogsumm-1.1.5-syslog-name-underscore-fix.patch
+Patch13: pflogsumm-1.1.5-syslog-name-underscore-fix.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -253,9 +251,8 @@ pushd pflogsumm-%{pflogsumm_ver}
 popd
 %endif
 %patch11 -p1 -b .chroot-example-fix
-%patch12 -p1 -b .glibc-234-build-fix
-%patch13 -p1 -b .whitespace-name-fix
-%patch14 -p1 -b .pflogsumm-1.1.5-syslog-name-underscore-fix
+%patch12 -p1 -b .whitespace-name-fix
+%patch13 -p1 -b .pflogsumm-1.1.5-syslog-name-underscore-fix
 
 for f in README_FILES/TLS_{LEGACY_,}README TLS_ACKNOWLEDGEMENTS; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
@@ -806,6 +803,10 @@ fi
 %endif
 
 %changelog
+* Tue Feb 22 2022 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.7.0-1
+- New version
+  Resolves: rhbz#2051046
+
 * Thu Jan 20 2022 Jaroslav Škarvada <jskarvad@redhat.com> - 2:3.6.4-1
 - New version
   Resolves: rhbz#2040977
